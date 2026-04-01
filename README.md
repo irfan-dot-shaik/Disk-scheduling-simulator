@@ -211,6 +211,5 @@ The test suite includes **30+ automated tests** covering:
 
 ---
 
-## 📄 License
 
-This project is built for educational purposes. Feel free to use and modify.
+
