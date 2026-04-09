@@ -2,7 +2,7 @@
 //  C-SCAN (Circular SCAN) Disk Scheduling Algorithm
 // ============================================================
 // Head moves in one direction servicing requests, jumps back
-// to the start of the disk (without servicing), and continues
+// to the start of the disk (without servicing), and continues  
 // in the same direction. Provides more uniform wait time.
 // ============================================================
 
