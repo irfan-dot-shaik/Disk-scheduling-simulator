@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Advanced Disk Scheduling Simulator</title>
-  <meta name="description" content="Visualize FCFS, SSTF, SCAN, and C-SCAN disk scheduling algorithms with real-time animation, performance metrics, and algorithm comparison." />
+  <meta name="description" content="Visualize FCFS, SSTF, SCAN, C-SCAN, LOOK, and C-LOOK disk scheduling algorithms with real-time animation, performance metrics, and algorithm comparison." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -36,7 +36,7 @@
         </div>
         <div>
           <h1>Disk Scheduling Simulator</h1>
-          <p class="subtitle">FCFS · SSTF · SCAN · C-SCAN</p>
+          <p class="subtitle">FCFS · SSTF · SCAN · C-SCAN · LOOK · C-LOOK</p>
         </div>
       </div>
       <div class="header-actions">
@@ -81,6 +81,8 @@
             <option value="sstf">SSTF (Shortest Seek Time First)</option>
             <option value="scan">SCAN (Elevator)</option>
             <option value="cscan">C-SCAN (Circular SCAN)</option>
+            <option value="look">LOOK</option>
+            <option value="clook">C-LOOK (Circular LOOK)</option>
           </select>
         </div>
 
@@ -244,6 +246,8 @@
         <li><strong>SSTF</strong> — Shortest Seek Time First</li>
         <li><strong>SCAN</strong> — Elevator Algorithm</li>
         <li><strong>C-SCAN</strong> — Circular SCAN</li>
+        <li><strong>LOOK</strong> — Look Algorithm</li>
+        <li><strong>C-LOOK</strong> — Circular LOOK</li>
       </ul>
       <p>Enter your disk requests, choose an algorithm, and watch the disk head move in real-time. Compare all algorithms side-by-side and export results as CSV.</p>
       <div class="modal-footer">

@@ -1,24 +1,23 @@
 // ============================================================
-//  C-SCAN (Circular SCAN) Disk Scheduling Algorithm
+//  C-LOOK (Circular LOOK) Disk Scheduling Algorithm
 // ============================================================
-// Head moves in one direction servicing requests, jumps back
-// to the start of the disk (without servicing), and continues
-// in the same direction. Provides more uniform wait time.
+// Head moves right servicing requests, jumps back to the lowest
+// pending request (without servicing), and continues right.
+// Does not go to the disk boundaries.
 // ============================================================
 
 /**
  * @param {number[]} requests - Array of cylinder numbers to service
  * @param {number} head - Initial head position
- * @param {number} diskSize - Total number of cylinders on the disk
  * @returns {{ sequence: number[], total: number, name: string }}
  */
-export function cscan(requests, head, diskSize) {
+export function clook(requests, head) {
   // Separate requests into those left and right of the head
   const left = requests.filter(r => r < head).sort((a, b) => a - b);
   const right = requests.filter(r => r >= head).sort((a, b) => a - b);
 
-  // Go right, hit the end, jump to 0, then service left-side requests
-  const run = [...right, diskSize - 1, 0, ...left];
+  // Go right, jump to the lowest pending request, then go right again
+  const run = [...right, ...left];
 
   const sequence = [head];
   let total = 0;
@@ -30,5 +29,5 @@ export function cscan(requests, head, diskSize) {
     sequence.push(cylinder);
   }
 
-  return { sequence, total, name: "C-SCAN" };
+  return { sequence, total, name: "C-LOOK" };
 }

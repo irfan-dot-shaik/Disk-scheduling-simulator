@@ -6,6 +6,8 @@ export { fcfs } from './fcfs.js';
 export { sstf } from './sstf.js';
 export { scan } from './scan.js';
 export { cscan } from './cscan.js';
+export { look } from './look.js';
+export { clook } from './clook.js';
 
 /**
  * Run a specific algorithm by name.
@@ -33,6 +35,14 @@ export function runAlgorithm(algo, requests, head, diskSize, direction) {
     case "cscan": {
       const { cscan: fn } = await_import('./cscan.js');
       return fn(requests, head, diskSize);
+    }
+    case "look": {
+      const { look: fn } = await_import('./look.js');
+      return fn(requests, head, direction);
+    }
+    case "clook": {
+      const { clook: fn } = await_import('./clook.js');
+      return fn(requests, head);
     }
     default:
       throw new Error(`Unknown algorithm: ${algo}`);

@@ -108,12 +108,36 @@
     return { sequence: seq, total, name: "C-SCAN" };
   }
 
+  function look(requests, head, direction) {
+    const left = requests.filter(r => r < head).sort((a, b) => a - b);
+    const right = requests.filter(r => r >= head).sort((a, b) => a - b);
+    let run;
+    if (direction === "right") { run = [...right, ...left.reverse()]; }
+    else { run = [...left.reverse(), ...right]; }
+    const seq = [head];
+    let total = 0, cur = head;
+    for (const c of run) { total += Math.abs(c - cur); cur = c; seq.push(c); }
+    return { sequence: seq, total, name: "LOOK" };
+  }
+
+  function clook(requests, head) {
+    const left = requests.filter(r => r < head).sort((a, b) => a - b);
+    const right = requests.filter(r => r >= head).sort((a, b) => a - b);
+    const run = [...right, ...left];
+    const seq = [head];
+    let total = 0, cur = head;
+    for (const c of run) { total += Math.abs(c - cur); cur = c; seq.push(c); }
+    return { sequence: seq, total, name: "C-LOOK" };
+  }
+
   function runAlgorithm(algo, requests, head, diskSize, direction) {
     switch (algo) {
       case "fcfs":  return fcfs(requests, head);
       case "sstf":  return sstf(requests, head);
       case "scan":  return scan(requests, head, diskSize, direction);
       case "cscan": return cscan(requests, head, diskSize);
+      case "look":  return look(requests, head, direction);
+      case "clook": return clook(requests, head);
       default:      return fcfs(requests, head);
     }
   }
@@ -332,9 +356,9 @@
   //  (Source: js/gui/charts.js)
 
   function drawComparison(requests, head, diskSize, direction) {
-    const algos = ["fcfs", "sstf", "scan", "cscan"];
-    const names = ["FCFS", "SSTF", "SCAN", "C-SCAN"];
-    const colors = ["#f43f5e", "#10b981", "#3b82f6", "#f59e0b"];
+    const algos = ["fcfs", "sstf", "scan", "cscan", "look", "clook"];
+    const names = ["FCFS", "SSTF", "SCAN", "C-SCAN", "LOOK", "C-LOOK"];
+    const colors = ["#f43f5e", "#10b981", "#3b82f6", "#f59e0b", "#8b5cf6", "#ec4899"];
     const results = algos.map(a => runAlgorithm(a, requests, head, diskSize, direction));
     const metrics = results.map(r => computeMetrics(r.sequence));
 
@@ -453,9 +477,9 @@
   // ══════════════════════════════════════════════════════════
 
   selectAlgorithm.addEventListener("change", () => {
-    dirGroup.classList.toggle("collapsed", selectAlgorithm.value !== "scan");
+    dirGroup.classList.toggle("collapsed", !["scan", "look"].includes(selectAlgorithm.value));
   });
-  dirGroup.classList.toggle("collapsed", selectAlgorithm.value !== "scan");
+  dirGroup.classList.toggle("collapsed", !["scan", "look"].includes(selectAlgorithm.value));
 
   btnSimulate.addEventListener("click", () => {
     const inp = getInputs();
